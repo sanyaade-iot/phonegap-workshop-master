@@ -2,19 +2,18 @@ var app = {
 
     findByName: function() {
         console.log('findByName');
+        var self = this;
         this.store.findByName($('.search-key').val(), function(employees) {
-            var l = employees.length;
-            var e;
-            $('.employee-list').empty();
-            for (var i=0; i<l; i++) {
-                e = employees[i];
-                $('.employee-list').append('<li><a href="#employees/' + e.id + '">' + e.firstName + ' ' + e.lastName + '</a></li>');
-            }
+            $('.employee-list').html(self.employeeLiTpl(employees));
         });
     },
 
     initialize: function() {
-        this.store = new LocalStorageStore(function() { app.showAlert('Store Initialized', 'Info');});
+        var self = this;
+        self.homeTpl = Handlebars.compile($("#home-tpl").html());
+        self.employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
+        self.store = new LocalStorageStore(function() {
+            self.renderHomeView()});
 
         $('.search-key').on('keyup', $.proxy(this.findByName, this));
     },
@@ -25,6 +24,11 @@ var app = {
         } else {
             alert(title ? (title + ": " + message) : message);
         }
+    },
+
+    renderHomeView: function() {
+        $('body').html(this.homeTpl());
+        $('.search-key').on('keyup', $.proxy(this.findByName, this));
     }
 
 };
