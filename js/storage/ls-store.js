@@ -20,10 +20,13 @@ var LocalStorageStore = function(successCallback, errorCallback) {
         var l = employees.length;
         for (var i=0; i < l; i++) {
             if (employees[i].id === id) {
+                console.log("ls found employee " + id);
                 employee = employees[i];
                 break;
             }
         }
+        console.log("findById found employee");
+        console.log(employee);
         callLater(callback, employee);
     }
 
@@ -32,6 +35,8 @@ var LocalStorageStore = function(successCallback, errorCallback) {
     var callLater = function(callback, data) {
         if (callback) {
             setTimeout(function() {
+                console.log("later call data");
+                console.log(data);
                 callback(data);
             });
         }
