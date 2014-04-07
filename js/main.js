@@ -1,19 +1,10 @@
 var app = {
 
-    findByName: function() {
-        console.log('findByName');
+    initialize: function () {
         var self = this;
-        this.store.findByName($('.search-key').val(), function(employees) {
-            $('.employee-list').html(self.employeeLiTpl(employees));
+        self.store = new LocalStorageStore(function () {
+            $('body').html(new HomeView(self.store).render().el);
         });
-    },
-
-    initialize: function() {
-        var self = this;
-        self.homeTpl = Handlebars.compile($("#home-tpl").html());
-        self.employeeLiTpl = Handlebars.compile($("#employee-li-tpl").html());
-        self.store = new LocalStorageStore(function() {
-            self.renderHomeView()});
 
         $('.search-key').on('keyup', $.proxy(this.findByName, this));
     },
@@ -24,12 +15,8 @@ var app = {
         } else {
             alert(title ? (title + ": " + message) : message);
         }
-    },
-
-    renderHomeView: function() {
-        $('body').html(this.homeTpl());
-        $('.search-key').on('keyup', $.proxy(this.findByName, this));
     }
+
 
 };
 
