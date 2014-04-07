@@ -16,6 +16,7 @@ var HomeView = function(store) {
     this.findByName = function () {
         console.log("findbyname");
         store.findByName($('.search-key').val(), function (employees) {
+            console.log(employees)
             $('.employee-list').html(HomeView.liTemplate(employees));
         });
 

@@ -6,7 +6,6 @@ var app = {
             $('body').html(new HomeView(self.store).render().el);
         });
 
-        $('.search-key').on('keyup', $.proxy(this.findByName, this));
     },
 
     showAlert: function (message, title) {
